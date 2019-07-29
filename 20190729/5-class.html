@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>输入框</title>
+    <style>
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .main {
+        background-color: deeppink;
+        padding: 1rem 2rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script src="./lib/react.development.js"></script>
+    <script src="./lib/react-dom.development.js"></script>
+    <script src="./lib/babel.min.js"></script>
+    <script type="text/babel">
+      // 在react中我们定义样式时使用className代替class
+      class App extends React.Component {
+        constructor() {
+          super();
+          this.state = {
+            isShow: true,
+          };
+        }
+        // 当state中的数据发生改变之后会重新执行render方法来进行页面组件的展示
+        render() {
+          const { isShow } = this.state;
+          return (
+            <div className='main'>
+              <button
+                onClick={() =>
+                  this.setState({
+                    isShow: !isShow,
+                  })
+                }
+              >
+                toggle
+              </button>
+              <h3 style={isShow ? { display: 'block' } : { display: 'none' }}>
+                这是一个标题
+              </h3>
+            </div>
+          );
+        }
+      }
+      ReactDOM.render(<App />, document.getElementById('app'));
+    </script>
+  </body>
+</html>

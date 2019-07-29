@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>计数器</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script src="./lib/react.development.js"></script>
+    <script src="./lib/react-dom.development.js"></script>
+    <script src="./lib/babel.min.js"></script>
+    <script type="text/babel">
+      // 在react中通过props向子组件传值
+      const { Component } = React;
+      class Counter extends Component {
+        constructor(props) {
+          super(props);
+          // 通过this.state可以为class定义的组件创建局部状态
+          this.state = {
+            count: 1,
+          };
+        }
+        clickHandle() {
+          // alert('按钮点击了');
+          // 通过this.setState设置当前的count值,当count改变之后会重新执行render方法
+          //  setState是一个异步执行的方法
+          //    可以接受两个参数
+          //        参数一 表示需要改变状态的数据
+          //        参数二 表示状态改变之后的处理函数
+          this.setState(
+            {
+              count: this.state.count + this.props.step,
+            },
+            function() {
+              console.log('状态改变了');
+            }
+          );
+        }
+        render() {
+          // 通过this.state可以直接获取组件的局部状态数据
+          const { count } = this.state;
+          return (
+            <div>
+              <h5>我是一个计数器-{count}</h5>
+              <button onClick={this.clickHandle.bind(this)}>点一下</button>
+            </div>
+          );
+        }
+      }
+      function App() {
+        return (
+          <div>
+            <Counter step={1} />
+            <hr />
+            <Counter step={2} />
+            <hr />
+            <Counter step={3} />
+            <hr />
+            <Counter step={4} />
+            <hr />
+          </div>
+        );
+      }
+      ReactDOM.render(<App />, document.querySelector('#app'));
+    </script>
+  </body>
+</html>

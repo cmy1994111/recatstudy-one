@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>输入框</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script src="./lib/react.development.js"></script>
+    <script src="./lib/react-dom.development.js"></script>
+    <script src="./lib/babel.min.js"></script>
+    <script type="text/babel">
+      class App extends React.Component {
+        constructor() {
+          super();
+          this.state = {
+            content: '',
+          };
+        }
+        keyUpHandle(event) {
+          this.setState({
+            content: event.target.value,
+          });
+        }
+        // event.target/event.CurrentTarget
+        render() {
+          const { content } = this.state;
+          return (
+            <div>
+              <input
+                type='text'
+                onKeyUp={event => {
+                  //   console.log(event.target.value);
+                  //   this.setState({
+                  //     content: event.target.value,
+                  //   });
+                  this.keyUpHandle(event);
+                }}
+              />
+              <br />
+              <h5>{content}</h5>
+            </div>
+          );
+        }
+      }
+      ReactDOM.render(<App />, document.getElementById('app'));
+    </script>
+  </body>
+</html>

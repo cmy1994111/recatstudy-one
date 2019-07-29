@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>电影数据</title>
+    <style>
+      html,
+      body {
+        height: 100%;
+      }
+      /* body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      } */
+      .main {
+        background-color: deeppink;
+        padding: 1rem 2rem;
+        height: 1000px;
+        overflow: scroll;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script src="./lib/react.development.js"></script>
+    <script src="./lib/react-dom.development.js"></script>
+    <script src="./lib/axios.js"></script>
+    <script src="./lib/babel.min.js"></script>
+    <script type="text/babel">
+      // 在react中我们定义样式时使用className代替class
+      class App extends React.Component {
+        constructor() {
+          super();
+          this.state = {
+            movies: [],
+          };
+        }
+        // 表示组件创建成功之后执行, 是组件的生命周期函数
+        componentDidMount() {
+          axios
+            .post('https://api.cat-shop.penkuoer.com/api/v2/proxy', {
+              url:
+                'https://api-m.mtime.cn/Showtime/LocationMovies.api?locationId=290',
+            })
+            .then(res => {
+              console.log(res.data);
+              this.setState({
+                movies: res.data.ms,
+              });
+            })
+            .catch(err => console.log(err));
+        }
+        // 当state中的数据发生改变之后会重新执行render方法来进行页面组件的展示
+        render() {
+          const { movies } = this.state;
+          return (
+            <div className='main'>
+              {movies.map(movie => (
+                <h5 key={movie.id}>{movie.t}</h5>
+              ))}
+            </div>
+          );
+        }
+      }
+      ReactDOM.render(<App />, document.getElementById('app'));
+    </script>
+  </body>
+</html>
