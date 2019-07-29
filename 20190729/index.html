@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>我的第一个react页面</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script src="./lib/react.development.js"></script>
+    <script src="./lib/react-dom.development.js"></script>
+    <script src="./lib/babel.min.js"></script>
+    <script type="text/babel">
+      const people = [
+        { id: 1, name: '沈剑心' },
+        { id: 2, name: '红细胞' },
+        { id: 3, name: '张大炮' },
+        { id: 4, name: '诺澜' },
+        { id: 5, name: '曾小贤' },
+      ];
+
+      /**
+       * 使用function创建组件，每一个组件都有一个返回值
+       *    返回值的内容为组件在页面中展示的数据内容
+       * */
+      function HelloWorld() {
+        return (
+          <div>
+            <h1>Hello World!</h1>
+            <p>这是一段话，我也不知道写什么。。。</p>
+            <p>我又加了一句话</p>
+          </div>
+        );
+      }
+      const { Component } = React; // 解构赋值
+      // 通过class定义组件
+      //    class可以扩展Component类实现组件的定义
+      //    每一个class定义的组件都需要一个render方法，此方法用来展示组件的内容
+      class Person extends Component {
+        constructor(props) {
+          super(props);
+          //   console.log(props);
+          //   console.log(props['nick-name']);
+        }
+        render() {
+          const { nickName } = this.props;
+          // 在react中使用{}的形式来把数据内容显示在组件中
+          return <h5>我是{nickName}</h5>;
+        }
+      }
+      function App() {
+        // 父组件通过props属性向子组件进行传值
+        // map循环之后生成一个新的数组对象,生成的数组内容为每一次的返回值
+        return (
+          <div>
+            <h5>我是第一个react应用</h5>
+            <hr />
+            <HelloWorld />
+            {people.map(person => (
+              <Person key={person.id} nickName={person.name} />
+            ))}
+          </div>
+        );
+      }
+      // 把组件展示在页面上
+      //  参数一 表示组件
+      //  参数二 表示组件挂载的位置
+      ReactDOM.render(<App />, document.getElementById('app'));
+    </script>
+  </body>
+</html>
